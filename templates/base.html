@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Moda Bauhaus</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <script src="{{ url_for('static', filename='scripts.js') }}" defer></script>
+</head>
+<body>
+  <header>
+    <div class="header-content">
+      <h1>Moda Bauhaus</h1>
+      <nav>
+        <ul>
+          <li><a href="{{ url_for('index') }}">Home</a></li>
+          <li><a href="{{ url_for('add_product') }}">Adicionar</a></li>
+          <li><a href="{{ url_for('upload_products') }}">Upload</a></li>
+          <li><a href="{{ url_for('search_clothes') }}">Buscar</a></li>
+          <li>
+            <a href="#" class="info-popup" data-modal="aboutModal">Info</a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    {% block content %}{% endblock %}
+  </main>
+
+  <footer>
+    <p>© 2023 Moda Bauhaus. Todos os direitos reservados.</p>
+  </footer>
+
+  <!-- Modal de Pop-up -->
+  <div id="aboutModal" class="modal">
+    <div class="modal-content">
+      <span class="close-modal">&times;</span>
+      <h2>Sobre Moda Bauhaus</h2>
+      <p>
+        Este site foi inspirado na estética Bauhaus, combinando design minimalista, formas geométricas e cores primárias para criar uma experiência elegante e moderna.
+      </p>
+    </div>
+  </div>
+</body>
+</html>
