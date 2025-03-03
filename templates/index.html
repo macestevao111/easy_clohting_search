@@ -1,48 +1,28 @@
-{% extends "base.html" %}
-{% block content %}
-  <h2>Produtos Cadastrados</h2>
-  <table>
-    <thead>
-      <tr>
-        <th>ID</th>
-        <th>URL</th>
-        <th>Preço</th>
-        <th>Medições</th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for product in products %}
-      <tr>
-        <td>{{ product.id }}</td>
-        <td><a href="{{ product.url }}" target="_blank">{{ product.url }}</a></td>
-        <td>{{ product.price }}</td>
-        <td>
-          <ul>
-            {% for m in product.measurement_values %}
-              <li>{{ m.category }}: {{ m.value }} cm</li>
-            {% endfor %}
-          </ul>
-        </td>
-      </tr>
-      {% endfor %}
-    </tbody>
-  </table>
-  
-  <h2>Média das Medições por Categoria</h2>
-  <table>
-    <thead>
-      <tr>
-        <th>Categoria</th>
-        <th>Média (cm)</th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for category, avg in averages %}
-      <tr>
-        <td>{{ category }}</td>
-        <td>{{ avg | round(2) }}</td>
-      </tr>
-      {% endfor %}
-    </tbody>
-  </table>
-{% endblock %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Produtos</title>
+</head>
+<body>
+    <h1>Lista de Produtos</h1>
+    <ul>
+        {% for product in products %}
+        <li>
+            <strong>URL:</strong> {{ product.url }}<br>
+            <strong>Preço:</strong> R$ {{ product.price }}<br>
+            <strong>Medições:</strong> {{ product.measurements }}
+        </li>
+        {% endfor %}
+    </ul>
+    <h2>Médias das Medições</h2>
+    <ul>
+        {% for category, avg_value in averages %}
+        <li>
+            <strong>{{ category }}:</strong> {{ avg_value }} cm
+        </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
