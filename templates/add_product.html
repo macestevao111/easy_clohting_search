@@ -13,15 +13,21 @@
   {% endwith %}
   
   <form method="post" action="{{ url_for('add_product') }}">
-    <label for="url">URL:</label>
-    <input type="text" id="url" name="url" required>
+    <div>
+      <label for="url">URL:</label>
+      <input type="text" id="url" name="url" required>
+    </div>
     
-    <label for="price">Preço (ex: por R$ 136,90):</label>
-    <input type="text" id="price" name="price" required>
+    <div>
+      <label for="price">Preço:</label>
+      <input type="text" id="price" name="price" required>
+    </div>
     
-    <label for="measurements">Medições:</label>
-    <textarea id="measurements" name="measurements" rows="10" required></textarea>
+    <div>
+      <label for="measurements">Medições:</label>
+      <textarea id="measurements" name="measurements" rows="10" required></textarea>
+    </div>
     
-    <input type="submit" value="Adicionar Produto">
+    <button type="submit">Adicionar</button>
   </form>
 {% endblock %}
