@@ -6,8 +6,8 @@ from flask_sqlalchemy import SQLAlchemy
 from werkzeug.utils import secure_filename
 
 app = Flask(__name__)
-app.secret_key = 's3cr3t'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///products.db'
+app.secret_key = os.getenv('SECRET_KEY', 's3cr3t')
+app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL', 'sqlite:///products.db')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 # Configuração para upload de arquivos Excel (XLS/XLSX)
