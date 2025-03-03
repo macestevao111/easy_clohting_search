@@ -1,0 +1,116 @@
+{% extends "base.html" %}
+{% block content %}
+  <h2>Busca Inteligente por Medidas</h2>
+  <form method="post" action="{{ url_for('search_clothes') }}">
+    <table>
+      <tr>
+        <td><label for="aba">Aba:</label></td>
+        <td><input type="number" step="any" id="aba" name="aba"></td>
+      </tr>
+      <tr>
+        <td><label for="altura">Altura:</label></td>
+        <td><input type="number" step="any" id="altura" name="altura"></td>
+      </tr>
+      <tr>
+        <td><label for="boca">Boca:</label></td>
+        <td><input type="number" step="any" id="boca" name="boca"></td>
+      </tr>
+      <tr>
+        <td><label for="busto">Busto:</label></td>
+        <td><input type="number" step="any" id="busto" name="busto"></td>
+      </tr>
+      <tr>
+        <td><label for="cano">Cano:</label></td>
+        <td><input type="number" step="any" id="cano" name="cano"></td>
+      </tr>
+      <tr>
+        <td><label for="cava">Cava:</label></td>
+        <td><input type="number" step="any" id="cava" name="cava"></td>
+      </tr>
+      <tr>
+        <td><label for="cintura">Cintura:</label></td>
+        <td><input type="number" step="any" id="cintura" name="cintura"></td>
+      </tr>
+      <tr>
+        <td><label for="circunferencia">Circunferência:</label></td>
+        <td><input type="number" step="any" id="circunferencia" name="circunferencia"></td>
+      </tr>
+      <tr>
+        <td><label for="comprimento">Comprimento:</label></td>
+        <td><input type="number" step="any" id="comprimento" name="comprimento"></td>
+      </tr>
+      <tr>
+        <td><label for="comprimento_manga">Comprimento Manga:</label></td>
+        <td><input type="number" step="any" id="comprimento_manga" name="comprimento_manga"></td>
+      </tr>
+      <tr>
+        <td><label for="comprimento_total">Comprimento Total:</label></td>
+        <td><input type="number" step="any" id="comprimento_total" name="comprimento_total"></td>
+      </tr>
+      <tr>
+        <td><label for="entrepernas">Entrepernas:</label></td>
+        <td><input type="number" step="any" id="entrepernas" name="entrepernas"></td>
+      </tr>
+      <tr>
+        <td><label for="gancho">Gancho:</label></td>
+        <td><input type="number" step="any" id="gancho" name="gancho"></td>
+      </tr>
+      <tr>
+        <td><label for="punho">Punho:</label></td>
+        <td><input type="number" step="any" id="punho" name="punho"></td>
+      </tr>
+      <tr>
+        <td><label for="quadril">Quadril:</label></td>
+        <td><input type="number" step="any" id="quadril" name="quadril"></td>
+      </tr>
+      <tr>
+        <td><label for="salto">Salto:</label></td>
+        <td><input type="number" step="any" id="salto" name="salto"></td>
+      </tr>
+      <tr>
+        <td><label for="solado">Solado:</label></td>
+        <td><input type="number" step="any" id="solado" name="solado"></td>
+      </tr>
+    </table>
+    <input type="submit" value="Buscar">
+  </form>
+  
+  <hr>
+  
+  {% if results %}
+    <h3>Resultados da Busca ({{ results|length }})</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>URL</th>
+          <th>Preço</th>
+          <th>Medições do Produto</th>
+          <th>Pontuação</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for candidate in results %}
+          <tr>
+            <td>{{ candidate.product.id }}</td>
+            <td><a href="{{ candidate.product.url }}" target="_blank">{{ candidate.product.url }}</a></td>
+            <td>{{ candidate.product.price }}</td>
+            <td>
+              <ul>
+                {% for m in candidate.product.measurement_values %}
+                  <li>{{ m.category }}: {{ m.value }} cm</li>
+                {% endfor %}
+              </ul>
+            </td>
+            <td>
+              <strong>Compatíveis:</strong> {{ candidate.match_count }}<br>
+              <strong>Média Diferença:</strong> {{ candidate.avg_diff|round(2) }} cm
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% elif request.method == 'POST' %}
+    <p>Nenhum produto compatível foi encontrado.</p>
+  {% endif %}
+{% endblock %}

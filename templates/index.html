@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block content %}
+  <h2>Produtos Cadastrados</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>URL</th>
+        <th>Preço</th>
+        <th>Medições</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for product in products %}
+      <tr>
+        <td>{{ product.id }}</td>
+        <td><a href="{{ product.url }}" target="_blank">{{ product.url }}</a></td>
+        <td>{{ product.price }}</td>
+        <td>
+          <ul>
+            {% for m in product.measurement_values %}
+              <li>{{ m.category }}: {{ m.value }} cm</li>
+            {% endfor %}
+          </ul>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  
+  <h2>Média das Medições por Categoria</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Categoria</th>
+        <th>Média (cm)</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for category, avg in averages %}
+      <tr>
+        <td>{{ category }}</td>
+        <td>{{ avg | round(2) }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}
