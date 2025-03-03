@@ -1,5 +1,4 @@
-Flask
-Flask-SQLAlchemy
-pandas
-Werkzeug
-gunicorn
+Flask==2.2.2
+Flask-SQLAlchemy==3.0.2
+pandas==1.5.3
+Frozen-Flask==0.18.0
