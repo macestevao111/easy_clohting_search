@@ -1,21 +1,59 @@
 {% extends "base.html" %}
+
 {% block content %}
-  <h2>Upload de Planilha Excel</h2>
-  
-  {% with messages = get_flashed_messages(with_categories=true) %}
-    {% if messages %}
-      <ul class="flash-messages">
-        {% for category, message in messages %}
-          <li><strong>{{ category }}:</strong> {{ message }}</li>
-        {% endfor %}
-      </ul>
-    {% endif %}
-  {% endwith %}
-  
-  <form method="post" enctype="multipart/form-data" action="{{ url_for('upload_products') }}">
-    <label for="excel_file">Selecione o arquivo Excel (.xls ou .xlsx):</label>
-    <input type="file" id="excel_file" name="excel_file" accept=".xls,.xlsx" required>
-    
-    <input type="submit" value="Fazer Upload">
-  </form>
+<div class="row">
+    <div class="col-12">
+        <h1>Upload em Massa</h1>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-8 mx-auto">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Upload de Planilhas Excel</h5>
+                
+                <div class="alert alert-info">
+                    <h6>Instruções:</h6>
+                    <p>As planilhas devem conter as seguintes colunas:</p>
+                    <ul>
+                        <li><strong>URL</strong>: Link do produto</li>
+                        <li><strong>Price</strong>: Preço no formato "R$ XX,XX"</li>
+                        <li><strong>Measurements</strong>: Medidas no formato:
+                            <pre>comprimento:
+77 cm
+busto:
+114 cm
+...</pre>
+                        </li>
+                    </ul>
+                </div>
+
+                <form method="post" enctype="multipart/form-data">
+                    <div class="mb-3">
+                        <label for="gender" class="form-label">Gênero dos Produtos</label>
+                        <select class="form-select" id="gender" name="gender" required>
+                            <option value="">Selecione o gênero...</option>
+                            <option value="M">Masculino</option>
+                            <option value="F">Feminino</option>
+                        </select>
+                        <div class="form-text">Este gênero será aplicado a todos os produtos das planilhas selecionadas.</div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="excel_files" class="form-label">Selecione as planilhas Excel (*.xls, *.xlsx)</label>
+                        <input type="file" class="form-control" id="excel_files" name="excel_files" 
+                               accept=".xls,.xlsx" multiple required>
+                        <div class="form-text">Você pode selecionar múltiplas planilhas ao mesmo tempo.</div>
+                    </div>
+
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-primary">Enviar</button>
+                        <a href="{{ url_for('index') }}" class="btn btn-secondary">Cancelar</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}
