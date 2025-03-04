@@ -1,48 +1,47 @@
 {% extends "base.html" %}
+
 {% block content %}
-  <h2>Produtos Cadastrados</h2>
-  <table>
-    <thead>
-      <tr>
-        <th>ID</th>
-        <th>URL</th>
-        <th>Preço</th>
-        <th>Medições</th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for product in products %}
-      <tr>
-        <td>{{ product.id }}</td>
-        <td><a href="{{ product.url }}" target="_blank">{{ product.url }}</a></td>
-        <td>{{ product.price }}</td>
-        <td>
-          <ul>
-            {% for m in product.measurement_values %}
-              <li>{{ m.category }}: {{ m.value }} cm</li>
-            {% endfor %}
-          </ul>
-        </td>
-      </tr>
-      {% endfor %}
-    </tbody>
-  </table>
-  
-  <h2>Média das Medições por Categoria</h2>
-  <table>
-    <thead>
-      <tr>
-        <th>Categoria</th>
-        <th>Média (cm)</th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for category, avg in averages %}
-      <tr>
-        <td>{{ category }}</td>
-        <td>{{ avg | round(2) }}</td>
-      </tr>
-      {% endfor %}
-    </tbody>
-  </table>
+<div class="row">
+    <div class="col-12 text-center mb-5">
+        <h1>Bem-vindo ao Catálogo de Roupas</h1>
+        <p class="lead">Escolha a seção que deseja explorar</p>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6 mb-4">
+        <div class="card h-100">
+            <div class="card-body text-center">
+                <h2 class="card-title">Moda Masculina</h2>
+                <p class="card-text">Explore nossa coleção de roupas masculinas com medidas detalhadas.</p>
+                <a href="{{ url_for('masculino') }}" class="btn btn-primary">Ver Produtos Masculinos</a>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-6 mb-4">
+        <div class="card h-100">
+            <div class="card-body text-center">
+                <h2 class="card-title">Moda Feminina</h2>
+                <p class="card-text">Explore nossa coleção de roupas femininas com medidas detalhadas.</p>
+                <a href="{{ url_for('feminino') }}" class="btn btn-primary">Ver Produtos Femininos</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-4">
+    <div class="col-12 text-center">
+        <h3>Ferramentas</h3>
+    </div>
+    <div class="col-md-6 mx-auto mb-4">
+        <div class="card">
+            <div class="card-body text-center">
+                <h4 class="card-title">Upload em Massa</h4>
+                <p class="card-text">Importe vários produtos através de planilhas Excel.</p>
+                <a href="{{ url_for('upload_products') }}" class="btn btn-secondary">Upload em Massa</a>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}
