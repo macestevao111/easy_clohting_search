@@ -1,33 +1,61 @@
 {% extends "base.html" %}
+
 {% block content %}
-  <h2>Adicionar Produto Manualmente</h2>
-  
-  {% with messages = get_flashed_messages(with_categories=true) %}
-    {% if messages %}
-      <ul class="flash-messages">
-        {% for category, message in messages %}
-          <li><strong>{{ category }}:</strong> {{ message }}</li>
-        {% endfor %}
-      </ul>
-    {% endif %}
-  {% endwith %}
-  
-  <form method="post" action="{{ url_for('add_product') }}">
-    <div>
-      <label for="url">URL:</label>
-      <input type="text" id="url" name="url" required>
+<div class="row">
+    <div class="col-12">
+        <h1>Adicionar Novo Produto</h1>
     </div>
-    
-    <div>
-      <label for="price">Preço:</label>
-      <input type="text" id="price" name="price" required>
+</div>
+
+<div class="row">
+    <div class="col-md-8 mx-auto">
+        <div class="card">
+            <div class="card-body">
+                <form method="POST">
+                    <div class="mb-3">
+                        <label for="url" class="form-label">URL do Produto</label>
+                        <input type="url" class="form-control" id="url" name="url" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="price" class="form-label">Preço (formato: R$ XX,XX)</label>
+                        <input type="text" class="form-control" id="price" name="price" 
+                               placeholder="R$ 0,00" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="gender" class="form-label">Gênero</label>
+                        <select class="form-select" id="gender" name="gender" required>
+                            <option value="">Selecione...</option>
+                            <option value="M">Masculino</option>
+                            <option value="F">Feminino</option>
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="measurements" class="form-label">Medições</label>
+                        <textarea class="form-control" id="measurements" name="measurements" 
+                                rows="10" required
+                                placeholder="Formato esperado:
+comprimento:
+77 cm
+busto:
+114 cm
+cintura:
+112 cm
+comprimento manga:
+68 cm
+cava:
+25 cm"></textarea>
+                    </div>
+
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-primary">Adicionar Produto</button>
+                        <a href="{{ url_for('index') }}" class="btn btn-secondary">Cancelar</a>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
-    
-    <div>
-      <label for="measurements">Medições:</label>
-      <textarea id="measurements" name="measurements" rows="10" required></textarea>
-    </div>
-    
-    <button type="submit">Adicionar</button>
-  </form>
+</div>
 {% endblock %}
