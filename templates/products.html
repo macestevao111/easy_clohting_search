@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <h1>Produtos {{ gender|title }}</h1>
+        <div class="mb-4">
+            <a href="{{ url_for('search_clothes', gender=gender[0].upper()) }}" class="btn btn-primary">
+                Buscar por Medidas
+            </a>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-8">
+        <h2>Produtos Cadastrados</h2>
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>URL</th>
+                        <th>Preço</th>
+                        <th>Medições</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for product in products %}
+                    <tr>
+                        <td>{{ product.id }}</td>
+                        <td>
+                            <a href="{{ product.url }}" target="_blank" class="text-break">
+                                {{ product.url }}
+                            </a>
+                        </td>
+                        <td>R$ {{ "%.2f"|format(product.price) }}</td>
+                        <td>
+                            <ul class="list-unstyled">
+                                {% for m in product.measurement_values %}
+                                    <li><strong>{{ m.category }}:</strong> {{ m.value }} cm</li>
+                                {% endfor %}
+                            </ul>
+                        </td>
+                    </tr>
+                    {% else %}
+                    <tr>
+                        <td colspan="4" class="text-center">
+                            Nenhum produto cadastrado ainda.
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <h2>Médias das Medições</h2>
+        <div class="table-responsive">
+            <table class="table table-sm">
+                <thead>
+                    <tr>
+                        <th>Categoria</th>
+                        <th>Média (cm)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for category, avg in averages %}
+                    <tr>
+                        <td>{{ category }}</td>
+                        <td>{{ avg | round(2) }}</td>
+                    </tr>
+                    {% else %}
+                    <tr>
+                        <td colspan="2" class="text-center">
+                            Sem dados suficientes para médias.
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %} 
