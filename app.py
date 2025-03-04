@@ -332,6 +332,11 @@ def search_clothes():
     user_input = {}
     gender = request.args.get('gender', 'M')  # Default para masculino se não especificado
     
+    # Adicionar logs para debug
+    total_m = Product.query.filter_by(gender='M').count()
+    total_f = Product.query.filter_by(gender='F').count()
+    logger.info(f"Total de produtos no banco: Masculinos={total_m}, Femininos={total_f}")
+    
     field_mapping = {
         'aba': 'aba',
         'altura': 'altura',
@@ -355,7 +360,7 @@ def search_clothes():
 
     if request.method == 'POST':
         gender = request.form.get('gender', 'M')
-        logger.debug(f"Iniciando busca de roupas - Gênero: {gender}")
+        logger.info(f"Iniciando busca de roupas - Gênero selecionado: {gender}")
         
         for form_field, measure_key in field_mapping.items():
             value = request.form.get(form_field)
@@ -369,7 +374,7 @@ def search_clothes():
         logger.debug(f"Medidas informadas: {user_input}")
         
         all_products = Product.query.filter_by(gender=gender).all()
-        logger.debug(f"Total de produtos para análise: {len(all_products)}")
+        logger.info(f"Total de produtos encontrados para gênero {gender}: {len(all_products)}")
         
         candidates = []
         for product in all_products:
@@ -398,11 +403,11 @@ def search_clothes():
                     'matched_details': matched_details
                 }
                 candidates.append(candidate)
-                logger.debug(f"Produto {product.id} - Matches: {match_count}/{fields_found}, Diff média: {avg_diff:.2f}")
+                logger.debug(f"Produto {product.id} ({product.gender}) - Matches: {match_count}/{fields_found}, Diff média: {avg_diff:.2f}")
         
         candidates.sort(key=lambda x: (-x['match_count'], x['avg_diff']))
         search_results = [c for c in candidates if c['match_count'] > 0]
-        logger.info(f"Busca finalizada: {len(search_results)} resultados encontrados")
+        logger.info(f"Busca finalizada: {len(search_results)} resultados encontrados para gênero {gender}")
     
     return render_template('search_clothes.html', 
                          results=search_results, 
