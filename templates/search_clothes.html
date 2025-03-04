@@ -2,6 +2,14 @@
 {% block content %}
   <h2>Busca Inteligente por Medidas</h2>
   <form method="post" action="{{ url_for('search_clothes') }}">
+    <div style="margin-bottom: 20px;">
+      <label for="gender">Gênero:</label>
+      <select id="gender" name="gender">
+        <option value="M" {% if gender == 'M' %}selected{% endif %}>Masculino</option>
+        <option value="F" {% if gender == 'F' %}selected{% endif %}>Feminino</option>
+      </select>
+    </div>
+    
     <table>
       <tr>
         <td><label for="aba">Aba:</label></td>
